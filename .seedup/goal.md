@@ -18,3 +18,14 @@
 - H-4 첫 버전에서 지원할 카드사·PG·은행 파일 형식 3개를 무엇으로 정할지.
 - H-5 현금 매출을 입력으로 받을지, 결과 엑셀에 사장님이 직접 적는 칸만 넣을지.
 - H-6 부가세와 세금 계산까지 결과에 넣을지.
+
+## 에이전트 훅 켜기 (Claude Code · Codex · Windows)
+훅은 sh 없이 Node로 `.seedup/hook.mjs`를 실행하므로 macOS · Linux · Windows에서 같은 묶음을 씁니다(Node 필요).
+- Claude Code: `.claude/settings.json`을 저장소에 넣거나 기존 `hooks`에 합치세요.
+- Codex CLI: `.codex/hooks.json`을 저장소에 넣은 뒤, 세션에서 `/hooks`를 열어 현재 훅 정의를 검토하고 신뢰해야 실행됩니다.
+
+## 커밋 전 검사 켜기
+커밋하기 전에 추가된 줄을 검사합니다(시크릿, 건너뛴 테스트, not implemented 예외는 커밋을 막고, 나머지는 경고만). Node가 있어야 합니다.
+이미 pre-commit 훅이 없다면 한 번만 실행하세요: `cp .seedup/pre-commit.sh .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit`
+이미 있거나(husky 등) sh가 없는 Windows 환경이라면 커밋 전 훅에 `node .seedup/hook.mjs pre-commit` 한 줄을 더하세요.
+의도한 예외는 그 줄이나 바로 윗줄에 `// seedup-allow: <코드> <이유>`를 적습니다.
